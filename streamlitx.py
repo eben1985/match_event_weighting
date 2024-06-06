@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import numpy as np
+import plotly.graph_objects as go
 
 
 # df_2024_SR = pd.read_csv('src/2024_SR.csv')
@@ -278,8 +279,8 @@ df_2024_SR_by_position['total_score_attack'] = df_2024_SR_by_position['total_tri
 
 # new column that divde the total_score by the number of BIP minutes played
 df_2024_SR_by_position['total_score_per_BIP'] = (df_2024_SR_by_position['total_score'] / df_2024_SR_by_position['total_ballinplay_minutes']).round(2)
-df_2024_SR_by_position['total_score_defence_per_defmin'] = (df_2024_SR_by_position['total_score_defence'] / df_2024_SR_by_position['total_ballinplay_minutes']).round(2)
-df_2024_SR_by_position['total_score_attack_per_attmin'] = (df_2024_SR_by_position['total_score_attack'] / df_2024_SR_by_position['total_ballinplay_minutes']).round(2)
+df_2024_SR_by_position['total_score_defence_per_defmin'] = (df_2024_SR_by_position['total_score_defence'] / df_2024_SR_by_position['total_def_minutes']).round(2)
+df_2024_SR_by_position['total_score_attack_per_attmin'] = (df_2024_SR_by_position['total_score_attack'] / df_2024_SR_by_position['total_att_minutes']).round(2)
 
 def group_and_sum(df):
     """
@@ -375,7 +376,10 @@ with col4:
     st.subheader('Defence score')
     df_position_defence_score = df_position_filtered[['player_name', 'total_score_defence', 'total_score_defence_per_defmin']].sort_values('total_score_defence', ascending=False)
     st.dataframe(df_position_defence_score)
-    
+
+st.dataframe(df_position_filtered)
+
+
 # use df_position_filtered to make a scatter plot with plotly having on the x-axis the total_score_attack_per_attmin and the total_score_defence_per_defmin on the y-axis show player-name on the plot
 fig = px.scatter(
     df_position_filtered, 
@@ -384,9 +388,7 @@ fig = px.scatter(
     text='player_name', 
     hover_name='player_name',
     title='Player score by position',
-    size='total_score',
 )
-
 # Update the text position to be above the markers
 fig.update_traces(textposition='top center')
 
