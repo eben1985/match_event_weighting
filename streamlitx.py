@@ -9,8 +9,8 @@ import plotly.graph_objects as go
 df_2024_SR_by_position = pd.read_csv('src/2024_SR_by_position.csv')
 
 kick_errors = -0.3
-rucks_won = 0.5
-rucks_lost = -0.3
+# rucks_won = 0.5
+# rucks_lost = -0.3
 linebreaks = 0.6
 tries = 1.4
 supported_breaks = 0.3
@@ -41,21 +41,21 @@ with st.sidebar:
         step=0.1
     )
 
-    rucks_won = st.slider(
-        label="Rucks Won",
-        min_value=-1.0,
-        max_value=1.0,
-        value=rucks_won,
-        step=0.1
-    )
+    # rucks_won = st.slider(
+    #     label="Rucks Won",
+    #     min_value=-1.0,
+    #     max_value=1.0,
+    #     value=rucks_won,
+    #     step=0.1
+    # )
 
-    rucks_lost = st.slider(
-        label="Rucks Lost",
-        min_value=-1.0,
-        max_value=1.0,
-        value=rucks_lost,
-        step=0.1
-    )
+    # rucks_lost = st.slider(
+    #     label="Rucks Lost",
+    #     min_value=-1.0,
+    #     max_value=1.0,
+    #     value=rucks_lost,
+    #     step=0.1
+    # )
 
     linebreaks = st.slider(
         label="Linebreaks",
@@ -197,8 +197,8 @@ with st.sidebar:
 
 slider_variables = {
     "kick_errors": kick_errors,
-    "rucks_won": rucks_won,
-    "rucks_lost": rucks_lost,
+    # "rucks_won": rucks_won,
+    # "rucks_lost": rucks_lost,
     "linebreaks": linebreaks,
     "tries": tries,
     "supported_breaks": supported_breaks,
@@ -248,8 +248,8 @@ df_2024_SR_by_position['total_offloads_m'] = (df_2024_SR_by_position['total_offl
 df_2024_SR_by_position['total_turnovers_conceded_m'] = (df_2024_SR_by_position['total_turnovers_conceded'] * turnovers_conceded)
 
 df_2024_SR_by_position['total_kick_errors_m'] = (df_2024_SR_by_position['total_kick_errors'] * kick_errors).round(2)
-df_2024_SR_by_position['total_rucks_won_m'] = (df_2024_SR_by_position['total_rucks_won'] * rucks_won).round(2)
-df_2024_SR_by_position['total_rucks_lost_m'] = (df_2024_SR_by_position['total_rucks_lost'] * rucks_lost).round(2)
+# df_2024_SR_by_position['total_rucks_won_m'] = (df_2024_SR_by_position['total_rucks_won'] * rucks_won).round(2)
+# df_2024_SR_by_position['total_rucks_lost_m'] = (df_2024_SR_by_position['total_rucks_lost'] * rucks_lost).round(2)
 df_2024_SR_by_position['carry_metres_post_contact_m'] = (df_2024_SR_by_position['total_carry_metres_post_contact'] * carry_metres_post_contact).round(2)
 df_2024_SR_by_position['ruck_arrivals_attack_first2_m'] = (df_2024_SR_by_position['total_ruck_arrivals_attack_first2'] * ruck_arrivals_attack_first2).round(2)
 df_2024_SR_by_position['ruck_arrivals_defence_first2_m'] = (df_2024_SR_by_position['total_ruck_arrivals_defence_first2'] * ruck_arrivals_defence_first2).round(2)
@@ -263,7 +263,8 @@ df_2024_SR_by_position['total_score'] = df_2024_SR_by_position['total_tries_m'] 
                     df_2024_SR_by_position['total_carries_dominant_m'] + df_2024_SR_by_position['total_supported_breaks_m'] + \
                         df_2024_SR_by_position['total_offloads_m'] + df_2024_SR_by_position['total_turnovers_conceded_m'] + \
                             df_2024_SR_by_position['carry_metres_post_contact_m'] + df_2024_SR_by_position['ruck_arrivals_attack_first2_m'] + df_2024_SR_by_position['ruck_arrivals_defence_first2_m'] +\
-                                df_2024_SR_by_position['total_kick_errors_m'] + df_2024_SR_by_position['total_rucks_won_m'] + df_2024_SR_by_position['total_rucks_lost_m']
+                                df_2024_SR_by_position['total_kick_errors_m']
+                                    #df_2024_SR_by_position['total_rucks_won_m'] + df_2024_SR_by_position['total_rucks_lost_m']
 
 #count these columns to create a total_score_defence column
 df_2024_SR_by_position['total_score_defence'] = df_2024_SR_by_position['total_jackals_success_m'] + df_2024_SR_by_position['total_tackles_made_m'] + \
@@ -274,8 +275,8 @@ df_2024_SR_by_position['total_score_attack'] = df_2024_SR_by_position['total_tri
     df_2024_SR_by_position['total_linebreaks_m'] + df_2024_SR_by_position['total_defenders_beaten_m'] + \
         df_2024_SR_by_position['total_carry_metres_m'] + df_2024_SR_by_position['total_carries_m'] + \
             df_2024_SR_by_position['total_carries_dominant_m'] + df_2024_SR_by_position['total_supported_breaks_m'] + \
-                df_2024_SR_by_position['carry_metres_post_contact_m'] + df_2024_SR_by_position['ruck_arrivals_attack_first2_m'] + \
-                    df_2024_SR_by_position['total_rucks_won_m'] + df_2024_SR_by_position['total_rucks_lost_m']
+                df_2024_SR_by_position['carry_metres_post_contact_m'] + df_2024_SR_by_position['ruck_arrivals_attack_first2_m']
+  #                  df_2024_SR_by_position['total_rucks_won_m'] + df_2024_SR_by_position['total_rucks_lost_m']
 
 # new column that divde the total_score by the number of BIP minutes played
 df_2024_SR_by_position['total_score_per_BIP'] = (df_2024_SR_by_position['total_score'] / df_2024_SR_by_position['total_ballinplay_minutes']).round(2)
@@ -319,8 +320,8 @@ def group_and_sum(df):
     'total_score_defence_per_defmin',
     'total_score_attack_per_attmin',
     'total_kick_errors', 
-    'total_rucks_won', 
-    'total_rucks_lost', 
+  #  'total_rucks_won', 
+  #  'total_rucks_lost', 
     'total_carry_metres_post_contact',
     'total_ruck_arrivals_attack_first2', 
     'total_ruck_arrivals_defence_first2'
